@@ -38,7 +38,7 @@ const AudioRecorder = {
     );
 
     var defaultOptions = {
-      SampleRate: 44100.0,
+      SampleRate: 48000,
       Channels: 2,
       AudioQuality: 'High',
       AudioEncoding: 'ima4',
