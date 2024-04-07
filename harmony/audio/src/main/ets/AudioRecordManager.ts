@@ -26,9 +26,9 @@ enum AVRecorderStateEnum {
 }
 
 export interface PathMap {
-  FilesDirectoryPath:string,
-  CacheDirectoryPath:string,
-  TempsDirectoryPath:string,
+  FilesDirectoryPath: string,
+  CacheDirectoryPath: string,
+  TempsDirectoryPath: string,
 }
 
 export class AudioRecordManager {
@@ -53,55 +53,55 @@ export class AudioRecordManager {
   private stopWatch: StopWatch = new StopWatch();
   private timer: number | null = null;
 
-  constructor(ctx: RNOHContext){
+  constructor(ctx: RNOHContext) {
     this.ctx = ctx;
   }
 
   //发布录音状态
-  private async notifyStateChanges(){
-    if(this.stateUpdateListener){
+  private async notifyStateChanges() {
+    if (this.stateUpdateListener) {
       Logger.info(`${TAG} state update. state=${this.state}`);
       this.stateUpdateListener(this.state);
     }
   }
 
   //设置录音状态订阅
-  private setStateUpdateListener(listener: (state: string) => void){
+  private setStateUpdateListener(listener: (state: string) => void) {
     Logger.info(`${TAG} state state update listener.`);
     this.stateUpdateListener = listener;
   }
 
   //开始录制对应的配置
-  async prepareRecordingAtPath(path: string,options: RecordingOptions):Promise<void>{
-    if(this.isRecording){
+  async prepareRecordingAtPath(path: string, options: RecordingOptions): Promise<void> {
+    if (this.isRecording) {
       this.showToast('Please call stopRecording before starting recording.');
       return;
     }
-    if(fs.accessSync(path)){
+    if (fs.accessSync(path)) {
       this.showToast('The file already exists in the directory.');
       return;
     }
-    if(path === ''){
+    if (path === '') {
       this.showToast('Invalid path.');
       return;
     }
-    if(!this.checkAuthorizationStatus()){
+    if (!this.checkAuthorizationStatus()) {
       this.showToast('Please obtain microphone authorization first.');
       return;
     }
-    try{
+    try {
       //创建录制实例
       this.avRecorder = await media.createAVRecorder();
       //监听状态改变
-      this.avRecorder.on('stateChange',(state: AVRecorderState) => {
+      this.avRecorder.on('stateChange', (state: AVRecorderState) => {
         this.state = state;
         this.notifyStateChanges();
         Logger.info(`${TAG} current state is ${state}.`);
       })
       //错误上报信息
-      this.avRecorder.on('error',(error: BusinessError) => {
+      this.avRecorder.on('error', (error: BusinessError) => {
         Logger.error(`${TAG} AudioRecorder failed, code is ${error?.code}, message is ${error?.message}.`);
-        if(error.code === 5400107){
+        if (error.code === 5400107) {
           this.showToast(`${TAG} Please call stopRecording before starting recording.`);
         }
       })
@@ -118,7 +118,7 @@ export class AudioRecordManager {
       await this.avRecorder.prepare(this.avConfig);
       Logger.info(`${TAG} Recording is prepared.`);
       this.showToast('Recording is prepared.');
-    }catch(error){
+    } catch (error) {
       Logger.error(`${TAG} ${JSON.stringify(error)}.`);
     }
   }
@@ -127,7 +127,7 @@ export class AudioRecordManager {
   async requestAuthorization(): Promise<boolean> {
     let grantStatus: boolean = await this.checkAuthorizationStatus(PERMISSION_LIST[0]);
     let authorizationStatus: boolean = grantStatus;
-    if(grantStatus){
+    if (grantStatus) {
       //已经授权，可以继续访问目标操作
       Logger.info(`${TAG} Already authorized.`);
     } else {
@@ -141,12 +141,12 @@ export class AudioRecordManager {
   //请求权限
   async requestAuth(permissions: Array<Permissions>) {
     let atManager = abilityAccessCtrl.createAtManager();
-    try{
+    try {
       const data = await atManager.requestPermissionsFromUser(this.context, permissions);
       let grantStatus: Array<number> = data.authResults;
       let length: number = grantStatus.length;
-      for(let i = 0; i < length; i++) {
-        if(grantStatus[i] === 0) {
+      for (let i = 0; i < length; i++) {
+        if (grantStatus[i] === 0) {
           //用户授权，可以继续访问目标操作
           Logger.info(`${TAG} Authorization successful.`);
           this.showToast('Authorization successful.');
@@ -157,7 +157,7 @@ export class AudioRecordManager {
           return;
         }
       }
-    }catch(error){
+    } catch (error) {
       Logger.error(`${TAG} requestPermissionsFromUser failed, code is ${error?.code}, message is ${error?.message}.`);
     }
   }
@@ -172,20 +172,20 @@ export class AudioRecordManager {
       let bundleInfo: bundleManager.BundleInfo = await bundleManager.getBundleInfoForSelf(bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION);
       let appInfo: bundleManager.ApplicationInfo = bundleInfo.appInfo;
       tokenId = appInfo.accessTokenId;
-    }catch(error) {
+    } catch (error) {
       Logger.error(`${TAG} getBundleInfoForSelf failed, code is ${error?.code}, message is ${error?.message}.`);
     }
     //检查应用是否被授予权限
     try {
       grantStatus = await atManager.checkAccessToken(tokenId, permission);
-    } catch(error) {
+    } catch (error) {
       Logger.error(`${TAG} checkAccessToken failed, code is ${error?.code}, message is ${error?.message}.`);
     }
     return grantStatus === abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED;
   }
 
   //格式化音频输入源
-  getAudioSourceFormatString(audioSource: number){
+  getAudioSourceFormatString(audioSource: number) {
     switch (audioSource) {
       case 0:
         return media.AudioSourceType.AUDIO_SOURCE_TYPE_DEFAULT;
@@ -221,11 +221,11 @@ export class AudioRecordManager {
 
   //开始录制
   public async startRecording() {
-    if(this.avRecorder.state === AVRecorderStateEnum.STARTED || this.avRecorder.state === AVRecorderStateEnum.PAUSED){
+    if (this.avRecorder.state === AVRecorderStateEnum.STARTED || this.avRecorder.state === AVRecorderStateEnum.PAUSED) {
       this.showToast('Please call stopRecording before starting recording.');
       return;
     }
-    if(this.avRecorder.state !== AVRecorderStateEnum.PREPARED){
+    if (this.avRecorder.state !== AVRecorderStateEnum.PREPARED) {
       this.showToast('Please call prepareRecording before starting recording.');
       return;
     }
@@ -240,12 +240,12 @@ export class AudioRecordManager {
 
   //暂停录制
   public async pauseRecording() {
-    if(this.avRecorder.state === AVRecorderStateEnum.STARTED) {//仅在started状态下调用pause为合理状态切换
+    if (this.avRecorder.state === AVRecorderStateEnum.STARTED) { //仅在started状态下调用pause为合理状态切换
       try {
         await this.avRecorder.pause();
         this.stopWatch.stop();
         this.showToast('pause recording.');
-      }catch(error){
+      } catch (error) {
         Logger.error(`${TAG} pauseRecording failed, code is ${error?.code}, message is ${error?.message}.`);
       }
     }
@@ -253,12 +253,12 @@ export class AudioRecordManager {
 
   //恢复录制
   public async resumeRecording() {
-    if(this.avRecorder.state === AVRecorderStateEnum.PAUSED) {//仅在paused状态下调用resume为合理状态切换
+    if (this.avRecorder.state === AVRecorderStateEnum.PAUSED) { //仅在paused状态下调用resume为合理状态切换
       try {
         await this.avRecorder.resume();
         this.stopWatch.start();
         this.showToast('resume recording.');
-      } catch (error){
+      } catch (error) {
         Logger.error(`${TAG} resumeRecording failed. code is ${error?.code}, message is ${error?.message}.`);
       }
     }
@@ -267,7 +267,7 @@ export class AudioRecordManager {
   //停止录制
   public async stopRecording() {
     //仅在started或者paused状态下调用stop为合理状态切换
-    if(this.avRecorder.state === AVRecorderStateEnum.STARTED || this.avRecorder.state === AVRecorderStateEnum.PAUSED) {
+    if (this.avRecorder.state === AVRecorderStateEnum.STARTED || this.avRecorder.state === AVRecorderStateEnum.PAUSED) {
       await this.avRecorder.stop();
     }
     //重置
@@ -285,21 +285,21 @@ export class AudioRecordManager {
   //获取存储路径
   public getAllPath(): PathMap {
     const pathMap: PathMap = {
-      FilesDirectoryPath:this.context.filesDir,
-      CacheDirectoryPath:this.context.cacheDir,
-      TempsDirectoryPath:this.context.tempDir,
+      FilesDirectoryPath: this.context.filesDir,
+      CacheDirectoryPath: this.context.cacheDir,
+      TempsDirectoryPath: this.context.tempDir,
     }
     Logger.info(`${TAG} return the pathMap.`);
     return pathMap;
   }
 
   private showToast(message: string) {
-    return promptAction.showToast({ message, bottom: TIP_BOTTOM, duration: TOAST_DURATION});
+    return promptAction.showToast({ message, bottom: TIP_BOTTOM, duration: TOAST_DURATION });
   }
 
   private startTimer() {
     this.timer = setInterval(() => {
-      if(this.avRecorder.state === AVRecorderStateEnum.STARTED) {
+      if (this.avRecorder.state === AVRecorderStateEnum.STARTED) {
         let currentTime: number = this.stopWatch.getTimeSeconds();
         this.ctx.rnInstance.emitDeviceEvent('recordingProgress', { currentTime });
       }
@@ -307,81 +307,11 @@ export class AudioRecordManager {
   }
 
   private stopTimer() {
-    if(this.timer !== null) {
+    if (this.timer !== null) {
       clearInterval(this.timer);
       this.timer = null;
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 

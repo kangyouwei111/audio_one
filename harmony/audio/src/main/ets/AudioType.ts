@@ -16,9 +16,9 @@ export interface CustomerOptions {
   Channels: number,
   AudioQuality?: 'Low' | 'Medium' | 'High',
   AudioEncoding: string,
-  MeteringEnabled?: boolean,// only ios
-  MeasurementMode?: boolean,// only ios
-  AudioEncodingBitRate: number,// only android
+  MeteringEnabled?: boolean, // only ios
+  MeasurementMode?: boolean, // only ios
+  AudioEncodingBitRate: number, // only android
   IncludeBase64?: boolean,
 }
 

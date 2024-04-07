@@ -4,37 +4,37 @@ import { RecordingOptions } from './AudioType';
 
 export class AudioModule extends TurboModule {
   ctx!: RNOHContext;
-  audioRecorderManager:AudioRecordManager = new AudioRecordManager(this.ctx);
+  audioRecorderManager: AudioRecordManager = new AudioRecordManager(this.ctx);
 
   prepareRecordingAtPath(path: string, options: RecordingOptions) {
-    this.audioRecorderManager.prepareRecordingAtPath(path,options);
+    this.audioRecorderManager.prepareRecordingAtPath(path, options);
   }
 
-  startRecording(){
+  startRecording() {
     this.audioRecorderManager.startRecording();
   }
 
-  pauseRecording(){
+  pauseRecording() {
     this.audioRecorderManager.pauseRecording();
   }
 
-  resumeRecording(){
+  resumeRecording() {
     this.audioRecorderManager.resumeRecording();
   }
 
-  stopRecording(){
+  stopRecording() {
     this.audioRecorderManager.stopRecording();
   }
 
-  requestAuthorization(): Promise<boolean>{
+  requestAuthorization(): Promise<boolean> {
     return this.audioRecorderManager.requestAuthorization();
   }
 
-  getAllPath(): PathMap{
+  getAllPath(): PathMap {
     return this.audioRecorderManager.getAllPath();
   }
 
-  checkAuthorizationStatus(): Promise<boolean>{
+  checkAuthorizationStatus(): Promise<boolean> {
     return this.audioRecorderManager.checkAuthorizationStatus();
   }
 }

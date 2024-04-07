@@ -36,7 +36,7 @@ static jsi::Value __hostFunction_RTNAudioTurboModule_checkAuthorizationStatus(js
   return static_cast<ArkTSTurboModule &>(turboModule).callAsync(rt, "checkAuthorizationStatus", args, count);
 }
 
-RTNCalculatorTurboModule::RTNCalculatorTurboModule(const ArkTSTurboModule::Context ctx, const std::string name) : ArkTSTurboModule(ctx, name) {
+RTNAudioTurboModule::RTNAudioTurboModule(const ArkTSTurboModule::Context ctx, const std::string name) : ArkTSTurboModule(ctx, name) {
   methodMap_["prepareRecordingAtPath"] = MethodMetadata{2, __hostFunction_RTNAudioTurboModule_prepareRecordingAtPath};
   methodMap_["startRecording"] = MethodMetadata{0, __hostFunction_RTNAudioTurboModule_startRecording};
   methodMap_["pauseRecording"] = MethodMetadata{0, __hostFunction_RTNAudioTurboModule_pauseRecording};
