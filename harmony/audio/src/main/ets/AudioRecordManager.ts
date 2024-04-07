@@ -8,7 +8,7 @@ import common from '@ohos.app.ability.common';
 import bundleManager from '@ohos.bundle.bundleManager';
 import abilityAccessCtrl, { Permissions } from '@ohos.abilityAccessCtrl';
 import { RNOHContext } from 'rnoh/ts';
-import { StopWatch } from 'StopWatch';
+import { StopWatch } from './StopWatch';
 
 const TAG = 'AudioRecorder : ';
 const TIP_BOTTOM = 140;
@@ -111,11 +111,11 @@ export class AudioRecordManager {
       this.avProfile.audioCodec = this.getAudioCodecFormatString(options.AudioEncoding);
       this.avProfile.audioBitrate = options.AudioEncodingBitRate;
       this.avProfile.fileFormat = this.getFileFormatFormatString(options.OutputFormat);
-      this.avProfile.audioSourceType = this.getAudioSourceFormatString(options.AudioSource);
+      this.avConfig.audioSourceType = this.getAudioSourceFormatString(options.AudioSource);
       //获取应用文件路径
       let file = fs.openSync(path, fs.OpenMode.READ_WRITE | fs.OpenMode.CREATE);
       this.avConfig.url = `fd://${file.fd}`;
-      await this.avRecorder.prepared(this.avConfig);
+      await this.avRecorder.prepare(this.avConfig);
       Logger.info(`${TAG} Recording is prepared.`);
       this.showToast('Recording is prepared.');
     }catch(error){
@@ -142,7 +142,7 @@ export class AudioRecordManager {
   async requestAuth(permissions: Array<Permissions>) {
     let atManager = abilityAccessCtrl.createAtManager();
     try{
-      const data = await atManager.requestPermissionFromUser(this.context, permissions);
+      const data = await atManager.requestPermissionsFromUser(this.context, permissions);
       let grantStatus: Array<number> = data.authResults;
       let length: number = grantStatus.length;
       for(let i = 0; i < length; i++) {
@@ -158,7 +158,7 @@ export class AudioRecordManager {
         }
       }
     }catch(error){
-      Logger.error(`${TAG} requestPermissionFromUser failed, code is ${error?.code}, message is ${error?.message}.`);
+      Logger.error(`${TAG} requestPermissionsFromUser failed, code is ${error?.code}, message is ${error?.message}.`);
     }
   }
 

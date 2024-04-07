@@ -5,14 +5,6 @@
       "value": "page from npm package"
     },
     {
-      "name": "label_permission_read_audio",
-      "value": "用于读取通话录音文件"
-    },
-    {
-      "name": "label_permission_write_audio",
-      "value": ""
-    },
-    {
       "name": "label_permission_write_media",
       "value": "用于媒体文件写"
     },

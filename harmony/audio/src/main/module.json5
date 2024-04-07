@@ -3,7 +3,7 @@
     name: 'audio',
     type: 'har',
     deviceTypes: ['default'],
-    mainElemant: "AudioRecorder",
+    mainElement: "AudioRecorder",
     requestPermissions: [
       {
         name: 'ohos.permission.MICROPHONE',

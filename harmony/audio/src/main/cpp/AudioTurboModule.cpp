@@ -4,35 +4,35 @@
 using namespace rnoh;
 using namespace facebook;
 
-static jsi::Value __hostFunction_RTNAudioTurboModule_prepareRecordingAtPath(jsi::Runtime &rt, react::TurboModule &turboModule1, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RTNAudioTurboModule_prepareRecordingAtPath(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
   return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "prepareRecordingAtPath", args, count);
 }
 
-static jsi::Value __hostFunction_RTNAudioTurboModule_startRecording(jsi::Runtime &rt, react::TurboModule &turboModule1, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RTNAudioTurboModule_startRecording(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
   return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "startRecording", args, count);
 }
 
-static jsi::Value __hostFunction_RTNAudioTurboModule_pauseRecording(jsi::Runtime &rt, react::TurboModule &turboModule1, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RTNAudioTurboModule_pauseRecording(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
   return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "pauseRecording", args, count);
 }
 
-static jsi::Value __hostFunction_RTNAudioTurboModule_resumeRecording(jsi::Runtime &rt, react::TurboModule &turboModule1, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RTNAudioTurboModule_resumeRecording(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
   return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "resumeRecording", args, count);
 }
 
-static jsi::Value __hostFunction_RTNAudioTurboModule_stopRecording(jsi::Runtime &rt, react::TurboModule &turboModule1, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RTNAudioTurboModule_stopRecording(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
   return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "stopRecording", args, count);
 }
 
-static jsi::Value __hostFunction_RTNAudioTurboModule_requestAuthorization(jsi::Runtime &rt, react::TurboModule &turboModule1, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RTNAudioTurboModule_requestAuthorization(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
   return static_cast<ArkTSTurboModule &>(turboModule).callAsync(rt, "requestAuthorization", args, count);
 }
 
-static jsi::Value __hostFunction_RTNAudioTurboModule_getAllPath(jsi::Runtime &rt, react::TurboModule &turboModule1, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RTNAudioTurboModule_getAllPath(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
   return static_cast<ArkTSTurboModule &>(turboModule).call(rt, "getAllPath", args, count);
 }
 
-static jsi::Value __hostFunction_RTNAudioTurboModule_checkAuthorizationStatus(jsi::Runtime &rt, react::TurboModule &turboModule1, const jsi::Value *args, size_t count) {
+static jsi::Value __hostFunction_RTNAudioTurboModule_checkAuthorizationStatus(jsi::Runtime &rt, react::TurboModule &turboModule, const jsi::Value *args, size_t count) {
   return static_cast<ArkTSTurboModule &>(turboModule).callAsync(rt, "checkAuthorizationStatus", args, count);
 }
 
